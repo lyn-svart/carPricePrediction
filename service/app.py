@@ -8,7 +8,6 @@ scaler = pickle.load(open('../ml/scaler.pkl', 'rb'))
 
 
 app = Flask(__name__)
-tasks = []
 
 predCar = []
 if __name__ == "__main__":
@@ -37,15 +36,7 @@ def create_pred():
     
     predCar.append(pred)
     return jsonify({'pred': pred}), 201
-@app.route('/tasks', methods=['POST'])
-def create_task():
-    task = {'title': request.json['title']}
-    tasks.append(task)
-    return jsonify({'task': task}), 201
 
-@app.route('/tasks', methods=['GET'])
-def get_tasks():
-    return jsonify({'tasks': tasks})
 
 
 

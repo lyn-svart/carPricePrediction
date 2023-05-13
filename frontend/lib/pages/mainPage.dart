@@ -5,6 +5,8 @@ import 'package:frontend/components/my_textfield.dart';
 import 'package:frontend/constants/my_colors.dart';
 import 'package:frontend/service/service.dart';
 
+import '../constants/my_list.dart';
+
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
 
@@ -13,18 +15,25 @@ class MainPage extends StatefulWidget {
 }
 
 String carPred = "";
+String? selectedBrand;
+String? selectedModel;
+String? selectedfuelType;
+String? selectedtransmission;
+int? brandController = brandmap[selectedBrand];
+String brandController2 = brandController.toString();
+int? modelController = modelmap[selectedModel];
+String modelController2 = modelController.toString();
+final mileageController = TextEditingController();
+int? transmissionController = tranmissonmap[selectedtransmission];
+String transmissionController2 = transmissionController.toString();
+int? fuelTypeController = fuelTypemap[selectedfuelType];
+String fuelTypeController2 = fuelTypeController.toString();
+final mpgController = TextEditingController();
+final engineSizeController = TextEditingController();
 
 class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
-    final brandController = TextEditingController();
-    final modelController = TextEditingController();
-    final mileageController = TextEditingController();
-    final transmissionController = TextEditingController();
-    final fuelTypeController = TextEditingController();
-    final mpgController = TextEditingController();
-    final engineSizeController = TextEditingController();
-
     return Scaffold(
         backgroundColor: lighttm,
         appBar: AppBar(
@@ -34,43 +43,163 @@ class _MainPageState extends State<MainPage> {
               color: lighttm2,
             )),
         body: Padding(
-          padding: EdgeInsets.all(1.0),
+          padding: EdgeInsets.all(15.0),
           child: Column(
             children: [
+              Flexible(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 1.0),
+                  child: Form(
+                    child: DropdownButtonFormField<String>(
+                      value: selectedBrand,
+                      items: brand.map((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      decoration: InputDecoration(
+                        labelText: 'Brand',
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: darktm, width: 2.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: darktm, width: 2.0),
+                        ),
+                        fillColor: lighttm2,
+                        filled: true,
+                      ),
+                      onChanged: (String? value) {
+                        setState(() {
+                          selectedBrand = value!;
+                          //print(selectedBrand);
+                        });
+                      },
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 7,
+              ),
+              Flexible(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 1.0),
+                  child: Form(
+                    child: DropdownButtonFormField<String>(
+                      value: selectedModel,
+                      items: model.map((String model) {
+                        return DropdownMenuItem<String>(
+                          value: model,
+                          child: Text(model),
+                        );
+                      }).toList(),
+                      decoration: InputDecoration(
+                        labelText: 'Model',
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: darktm, width: 2.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: darktm, width: 2.0),
+                        ),
+                        fillColor: lighttm2,
+                        filled: true,
+                      ),
+                      onChanged: (String? value) {
+                        setState(() {
+                          selectedModel = value!;
+                        });
+                      },
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 7,
+              ),
               Row(
                 children: [
                   Flexible(
-                      child: MyTextField(
-                          controller: brandController, hintText: "brand")),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 1.0),
+                      child: Form(
+                        child: DropdownButtonFormField<String>(
+                          value: selectedfuelType,
+                          items: fuelType.map((String fuelType) {
+                            return DropdownMenuItem<String>(
+                              value: fuelType,
+                              child: Text(fuelType),
+                            );
+                          }).toList(),
+                          decoration: InputDecoration(
+                            labelText: 'FuelType',
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: darktm, width: 2.0),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: darktm, width: 2.0),
+                            ),
+                            fillColor: lighttm2,
+                            filled: true,
+                          ),
+                          onChanged: (String? value) {
+                            setState(() {
+                              selectedfuelType = value!;
+                              print(selectedfuelType);
+                              print(fuelTypeController2);
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
                   SizedBox(
-                    height: 5,
+                    height: 7,
                   ),
                   Flexible(
-                      child: MyTextField(
-                          controller: modelController, hintText: "model")),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 1.0),
+                      child: Form(
+                        child: DropdownButtonFormField<String>(
+                          value: selectedtransmission,
+                          items: transmission.map((String transmission) {
+                            return DropdownMenuItem<String>(
+                              value: transmission,
+                              child: Text(transmission),
+                            );
+                          }).toList(),
+                          decoration: InputDecoration(
+                            labelText: 'Transmission',
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: darktm, width: 2.0),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: darktm, width: 2.0),
+                            ),
+                            fillColor: lighttm2,
+                            filled: true,
+                          ),
+                          onChanged: (String? value) {
+                            setState(() {
+                              selectedtransmission = value!;
+                              print(selectedtransmission);
+                              print(transmissionController2);
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
+              ),
+              SizedBox(
+                height: 7,
               ),
               Row(
                 children: [
                   Flexible(
                       child: MyTextField(
                           controller: mileageController, hintText: "mileage")),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Flexible(
-                    child: MyTextField(
-                        controller: transmissionController,
-                        hintText: "transmission"),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Flexible(
-                      child: MyTextField(
-                          controller: fuelTypeController,
-                          hintText: "fueltype")),
                   SizedBox(
                     height: 5,
                   ),
@@ -82,26 +211,33 @@ class _MainPageState extends State<MainPage> {
                   ),
                 ],
               ),
+              SizedBox(
+                height: 7,
+              ),
               Flexible(
                 child: MyTextField(
                     controller: engineSizeController, hintText: "engine size"),
               ),
               SizedBox(
-                height: 5,
+                height: 7,
               ),
               MyButton(
-                  onTap: () async {
-                    await pred(
-                        brandController.text,
-                        modelController.text,
-                        mileageController.text,
-                        transmissionController.text,
-                        fuelTypeController.text,
-                        mpgController.text,
-                        engineSizeController.text);
-                    setState(() {});
+                  onTap: () {
+                    setState(() {
+                      pred(
+                          brandController2,
+                          modelController2,
+                          mileageController.text,
+                          transmissionController2,
+                          fuelTypeController2,
+                          mpgController.text,
+                          engineSizeController.text);
+                    });
                   },
                   buttonName: "Pred"),
+              SizedBox(
+                height: 7,
+              ),
               FutureBuilder<String>(
                 future: getPred(),
                 builder: (context, snapshot) {
